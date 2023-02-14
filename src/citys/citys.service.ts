@@ -15,7 +15,7 @@ export class CitysService {
     }
 
     async createCity(dto: CreateCityDto) {
-        const city = this.cityRepository.create({ city_name: dto.city_name });
+        const city = this.cityRepository.create(dto);
         await this.cityRepository.save(city);
         return city;
     }
@@ -23,5 +23,13 @@ export class CitysService {
     async getCityById(id: number) {
         const city = this.cityRepository.findOne({ where: { city_id: id } });
         return city;
+    }
+
+    async isCityExists(city: City) {
+        const cityToCheck = this.getCityById(city.city_id);
+        if (cityToCheck) {
+            return true;
+        }
+        return false;
     }
 }
