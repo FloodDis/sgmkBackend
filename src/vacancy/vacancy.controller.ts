@@ -1,4 +1,5 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
+import { CreateVacancyDto } from './dto/create-vacancy.dto';
 import { VacancyService } from './vacancy.service';
 
 @Controller('vacancy')
@@ -9,5 +10,10 @@ export class VacancyController {
     @Get()
     getAllVacancies() {
         this.vacancyService.getAllVacancies();
+    }
+
+    @Post()
+    createVacancy(vacancyDto: CreateVacancyDto) {
+        this.vacancyService.createVacancy(vacancyDto);
     }
 }
