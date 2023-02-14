@@ -17,14 +17,16 @@ export class VacancyService {
     }
 
     async createVacancy(vacancyDto: CreateVacancyDto) {
-        const city = await this.cityService.getCityById(vacancyDto.city_id);
+        if (!this.cityService.isCityExists(vacancyDto.city)) {
+            this.cityService.createCity({ city_name: vacancyDto.city.city_name });
+        }
         const vacancy = this.vacancyRepository.create({
             vacancy_name: vacancyDto.vacancy_name,
             salary: vacancyDto.salary,
             description: vacancyDto.description,
-            city: city,
+            city: vacancyDto.city,
             users: [],
-            prof_fields: []
+            prof_fields: vacancyDto.prof_fields
         });
         await this.vacancyRepository.save(vacancy);
         return vacancy;
