@@ -9,6 +9,7 @@ import { ProfFieldModule } from './prof-field/prof-field.module';
 import { ProfField } from './prof-field/prof-field.entity';
 import { VacancyModule } from './vacancy/vacancy.module';
 import { Vacancy } from './vacancy/vacancy.entity';
+import { RegionsModule } from './regions/regions.module';
 
 
 @Module({
@@ -30,7 +31,8 @@ import { Vacancy } from './vacancy/vacancy.entity';
     }),
     CitysModule,
     ProfFieldModule,
-    VacancyModule
+    VacancyModule,
+    RegionsModule
   ],
   controllers: [],
   providers: [],
