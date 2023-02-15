@@ -25,11 +25,4 @@ export class CitysService {
         return city;
     }
 
-    async isCityExists(city: City) {
-        const cityToCheck = this.getCityById(city.city_id);
-        if (cityToCheck) {
-            return true;
-        }
-        return false;
-    }
 }
