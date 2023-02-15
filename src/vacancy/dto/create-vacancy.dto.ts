@@ -1,6 +1,5 @@
-import { City } from 'src/citys/citys.entity';
-import { ProfField } from 'src/prof-field/prof-field.entity';
-import { User } from 'src/users/users.entity';
+import { CreateCityDto } from 'src/citys/dto/create-city.dto';
+import { CreateProfFieldDto } from 'src/prof-field/dto/create-prof-field.dto';
 
 export class CreateVacancyDto {
 
@@ -10,7 +9,8 @@ export class CreateVacancyDto {
 
     readonly description: string;
 
-    readonly city: City;
+    readonly city?: CreateCityDto;
+    readonly cityId?: number;
 
-    readonly prof_fields: ProfField[];
+    readonly prof_fields: CreateProfFieldDto[];
 }
