@@ -12,15 +12,13 @@ export class CitysService {
 
     async getAllCitys() {
         const citys = await this.cityRepository.find();
+
         return citys.map((x) => new CityResponceDto(x));
     }
 
     async createCity(dto: CreateCityDto) {
-
         const city = new City();
-
         city.city_name = dto.city_name;
-
         await this.cityRepository.save(city);
 
         return city;
@@ -28,6 +26,7 @@ export class CitysService {
 
     async getCityById(id: number) {
         const city = this.cityRepository.findOne({ where: { city_id: id } });
+
         return city;
     }
 
