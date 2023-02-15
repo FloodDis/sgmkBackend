@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UserResponceDto } from './dto/user-responce.dto';
 import { User } from './users.entity';
 
 @Injectable()
@@ -18,5 +19,10 @@ export class UsersService {
     async getUserByEmail(email: string) {
         const user = await this.userRepository.findOne({ where: { email } });
         return user;
+    }
+
+    async geyAllUsers() {
+        const users = this.userRepository.find();
+        return (await users).map((x) => new UserResponceDto(x));
     }
 }
