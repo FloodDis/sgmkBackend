@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
 import { VacancyService } from './vacancy.service';
 
@@ -13,7 +13,7 @@ export class VacancyController {
     }
 
     @Post()
-    createVacancy(vacancyDto: CreateVacancyDto) {
+    createVacancy(@Body() vacancyDto: CreateVacancyDto) {
         this.vacancyService.createVacancy(vacancyDto);
     }
 }
