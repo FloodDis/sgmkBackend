@@ -15,8 +15,13 @@ export class CitysService {
     }
 
     async createCity(dto: CreateCityDto) {
-        const city = this.cityRepository.create(dto);
+
+        const city = new City();
+
+        city.city_name = dto.city_name;
+
         await this.cityRepository.save(city);
+
         return city;
     }
 
