@@ -11,4 +11,9 @@ export class UsersController {
     createUser(@Body() userDto: CreateUserDto) {
         this.usersService.createUser(userDto);
     }
+
+    @Get()
+    getAllUsers() {
+        return this.usersService.geyAllUsers();
+    }
 }
