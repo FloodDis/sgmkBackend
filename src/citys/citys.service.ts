@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { City } from './citys.entity';
+import { CityResponceDto } from './dto/city-responce.dto';
 import { CreateCityDto } from './dto/create-city.dto';
 
 @Injectable()
@@ -11,7 +12,7 @@ export class CitysService {
 
     async getAllCitys() {
         const citys = await this.cityRepository.find();
-        return citys;
+        return citys.map((x) => new CityResponceDto(x));
     }
 
     async createCity(dto: CreateCityDto) {
