@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProfFieldDto } from './dto/create-prof-field.dto';
+import { ProfFieldResponceDto } from './dto/prof-field-responce.dto';
 import { ProfField } from './prof-field.entity';
 
 @Injectable()
@@ -11,7 +12,7 @@ export class ProfFieldService {
 
     async getAllProfFields() {
         const profFields = this.profRepository.find();
-        return profFields;
+        return (await profFields).map((x) => new ProfFieldResponceDto(x));
     }
 
     async createProfField(profDto: CreateProfFieldDto) {
