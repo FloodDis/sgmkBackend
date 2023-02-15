@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CitysService } from 'src/citys/citys.service';
 import { Repository } from 'typeorm';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
+import { VacancyResponseDto } from './dto/vacancy-responce.dto';
 import { Vacancy } from './vacancy.entity';
 
 @Injectable()
@@ -13,7 +14,7 @@ export class VacancyService {
 
     async getAllVacancies() {
         const vacancies = await this.vacancyRepository.find();
-        return vacancies;
+        return vacancies.map(x => new VacancyResponseDto(x));
     }
 
     async createVacancy(vacancyDto: CreateVacancyDto) {

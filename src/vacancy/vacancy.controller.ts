@@ -9,7 +9,7 @@ export class VacancyController {
 
     @Get()
     getAllVacancies() {
-        this.vacancyService.getAllVacancies();
+        return this.vacancyService.getAllVacancies();
     }
 
     @Post()
