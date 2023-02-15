@@ -17,18 +17,16 @@ export class VacancyService {
     }
 
     async createVacancy(vacancyDto: CreateVacancyDto) {
-        if (!this.cityService.isCityExists(vacancyDto.city)) {
-            this.cityService.createCity({ city_name: vacancyDto.city.city_name });
-        }
-        const vacancy = this.vacancyRepository.create({
-            vacancy_name: vacancyDto.vacancy_name,
-            salary: vacancyDto.salary,
-            description: vacancyDto.description,
-            city: vacancyDto.city,
-            users: [],
-            prof_fields: vacancyDto.prof_fields
-        });
+        const vacancy = new Vacancy();
+
+        vacancy.vacancy_name = vacancyDto.vacancy_name;
+        vacancy.salary = vacancyDto.salary;
+        vacancy.description = vacancyDto.description;
+        vacancy.city =
+            vacancyDto.cityId ? await this.cityService.getCityById(vacancyDto.cityId) : await this.cityService.createCity(vacancyDto.city);
+
         await this.vacancyRepository.save(vacancy);
+
         return vacancy;
     }
 }
