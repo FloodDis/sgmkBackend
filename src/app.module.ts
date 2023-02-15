@@ -11,6 +11,7 @@ import { VacancyModule } from './vacancy/vacancy.module';
 import { Vacancy } from './vacancy/vacancy.entity';
 import { RegionsModule } from './regions/regions.module';
 import { Region } from './regions/regions.entity';
+import { CompaniesModule } from './companies/companies.module';
 
 
 @Module({
@@ -33,7 +34,8 @@ import { Region } from './regions/regions.entity';
     CitysModule,
     ProfFieldModule,
     VacancyModule,
-    RegionsModule
+    RegionsModule,
+    CompaniesModule
   ],
   controllers: [],
   providers: [],
