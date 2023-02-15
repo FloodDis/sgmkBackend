@@ -1,4 +1,5 @@
 import { City } from 'src/citys/citys.entity';
+import { Company } from 'src/companies/companies.entity';
 import { ProfField } from 'src/prof-field/prof-field.entity';
 import { User } from 'src/users/users.entity';
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
@@ -29,4 +30,7 @@ export class Vacancy {
     @ManyToMany(() => ProfField, (profField) => profField.vacancies)
     @JoinTable({ name: 'prof_field-vacancy' })
     prof_fields: ProfField[];
+
+    @ManyToOne(() => Company, (company) => company.vacancies)
+    company: Company;
 }

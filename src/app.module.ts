@@ -12,6 +12,7 @@ import { Vacancy } from './vacancy/vacancy.entity';
 import { RegionsModule } from './regions/regions.module';
 import { Region } from './regions/regions.entity';
 import { CompaniesModule } from './companies/companies.module';
+import { Company } from './companies/companies.entity';
 
 
 @Module({
@@ -27,7 +28,7 @@ import { CompaniesModule } from './companies/companies.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [User, City, ProfField, Vacancy, Region],
+      entities: [User, City, ProfField, Vacancy, Region, Company],
       autoLoadEntities: true,
       synchronize: true
     }),
