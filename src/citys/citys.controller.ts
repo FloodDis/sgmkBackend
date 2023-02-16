@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
 import { CitysService } from './citys.service';
 import { CreateCityDto } from './dto/create-city.dto';
 import { DeleteCityDto } from './dto/delete-city.dto';
 
-@Controller('citys')
+@Controller('city')
 export class CitysController {
 
     constructor(private citysService: CitysService) { }
@@ -22,4 +22,10 @@ export class CitysController {
     deleteCity(@Body() dto: DeleteCityDto) {
         this.citysService.deleteCity(dto);
     }
+
+    @Post('/:id')
+    updateCity(@Param('id') id: number, @Body() dto: CreateCityDto) {
+        this.citysService.updateCity(id, dto);
+    }
+
 }

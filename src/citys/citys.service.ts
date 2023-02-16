@@ -35,4 +35,8 @@ export class CitysService {
         return await this.cityRepository.delete(dto.city_id);
     }
 
+    async updateCity(id: number, dto: CreateCityDto) {
+        return await this.cityRepository.update(id, dto);
+    }
+
 }
