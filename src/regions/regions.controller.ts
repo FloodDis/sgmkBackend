@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateRegionDto } from './dto/create-region.dto';
 import { RegionsService } from './regions.service';
 
@@ -15,5 +15,15 @@ export class RegionsController {
     @Post()
     createRegion(@Body() regionDto: CreateRegionDto) {
         this.regionService.createRegion(regionDto);
+    }
+
+    @Delete('/:id')
+    deleteRegion(@Param('id') id: number) {
+        this.regionService.deleteRegion(id);
+    }
+
+    @Post('/:id')
+    updateRegion(@Param('id') id: number, @Body() dto: CreateRegionDto) {
+        this.regionService.updateRegion(id, dto);
     }
 }

@@ -22,4 +22,12 @@ export class RegionsService {
 
         return region;
     }
+
+    async deleteRegion(id: number) {
+        await this.regionRepository.delete({ region_id: id });
+    }
+
+    async updateRegion(id: number, dto: CreateRegionDto) {
+        this.regionRepository.update(id, { region_name: dto.region_name });
+    }
 }
