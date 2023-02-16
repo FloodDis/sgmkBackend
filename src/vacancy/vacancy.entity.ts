@@ -20,7 +20,7 @@ export class Vacancy {
     @Column({ type: 'text' })
     description: string;
 
-    @ManyToOne(() => City, (city) => city.vacancies, { onDelete: 'CASCADE' })
+    @ManyToOne(() => City, (city) => city.vacancies, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     city: City;
 
     @ManyToMany(() => User, (user) => user.vacancies)
