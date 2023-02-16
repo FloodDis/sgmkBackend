@@ -11,9 +11,9 @@ export class City {
     @Column({ type: 'text', nullable: true, unique: true })
     city_name: string;
 
-    @OneToMany(() => Vacancy, (vacancy) => vacancy.city)
+    @OneToMany(() => Vacancy, (vacancy) => vacancy.city, { onDelete: 'CASCADE' })
     vacancies: Vacancy[];
 
-    @ManyToOne(() => Region, (region) => region.cities)
+    @ManyToOne(() => Region, (region) => region.cities, { onDelete: 'CASCADE' })
     region: Region;
 }
