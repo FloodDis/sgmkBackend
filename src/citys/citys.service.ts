@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { City } from './citys.entity';
 import { CityResponceDto } from './dto/city-responce.dto';
 import { CreateCityDto } from './dto/create-city.dto';
+import { DeleteCityDto } from './dto/delete-city.dto';
 
 @Injectable()
 export class CitysService {
@@ -25,9 +26,13 @@ export class CitysService {
     }
 
     async getCityById(id: number) {
-        const city = this.cityRepository.findOne({ where: { city_id: id } });
+        const city = await this.cityRepository.findOne({ where: { city_id: id } });
 
         return city;
+    }
+
+    async deleteCity(dto: DeleteCityDto) {
+        return await this.cityRepository.delete(dto.city_id);
     }
 
 }
