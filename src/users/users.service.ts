@@ -25,4 +25,20 @@ export class UsersService {
         const users = this.userRepository.find();
         return (await users).map((x) => new UserResponceDto(x));
     }
+
+    async deleteUser(id: number) {
+        await this.userRepository.delete({ user_id: id });
+    }
+
+    async updateUser(id: number, dto: CreateUserDto) {
+        await this.userRepository.update(id, {
+            surname: dto.surname,
+            name: dto.name,
+            patronymic: dto.patronymic,
+            email: dto.email,
+            password: dto.password,
+            role: dto.role
+        });
+    }
+
 }
