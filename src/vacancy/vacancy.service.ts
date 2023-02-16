@@ -30,4 +30,16 @@ export class VacancyService {
 
         return vacancy;
     }
+
+    async deleteVacancy(id: number) {
+        await this.vacancyRepository.delete({ vacancy_id: id });
+    }
+
+    async updateVacancy(id: number, dto: CreateVacancyDto) {
+        await this.vacancyRepository.update(id, {
+            vacancy_name: dto.vacancy_name,
+            salary: dto.salary,
+            description: dto.description,
+        })
+    }
 }
