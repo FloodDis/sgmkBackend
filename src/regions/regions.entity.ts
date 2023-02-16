@@ -11,6 +11,6 @@ export class Region {
     @Column({ type: 'text' })
     region_name: string;
 
-    @OneToMany(() => City, (city) => city.region)
+    @OneToMany(() => City, (city) => city.region, { onDelete: 'CASCADE' })
     cities: City[];
 }
