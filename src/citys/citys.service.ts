@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import { City } from './citys.entity';
 import { CityResponceDto } from './dto/city-responce.dto';
 import { CreateCityDto } from './dto/create-city.dto';
-import { DeleteCityDto } from './dto/delete-city.dto';
 
 @Injectable()
 export class CitysService {

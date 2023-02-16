@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
 import { CitysService } from './citys.service';
 import { CreateCityDto } from './dto/create-city.dto';
-import { DeleteCityDto } from './dto/delete-city.dto';
 
 @Controller('city')
 export class CitysController {
