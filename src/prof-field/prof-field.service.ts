@@ -21,6 +21,14 @@ export class ProfFieldService {
         return profField;
     }
 
+    async deleteProfField(id: number) {
+        this.profRepository.delete({ prof_id: id });
+    }
+
+    async updateProfField(id: number, dto: CreateProfFieldDto) {
+        this.profRepository.update(id, { prof_name: dto.prof_name });
+    }
+
     /* async getProfFieldsById(profFieldsId: number[]) {
         let profFields: ProfField[];
         let profFieldValue: ProfField;

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateProfFieldDto } from './dto/create-prof-field.dto';
 import { ProfFieldService } from './prof-field.service';
 
@@ -15,5 +15,15 @@ export class ProfFieldController {
     @Get()
     getAllProfFields() {
         return this.profFieldService.getAllProfFields();
+    }
+
+    @Delete('/:id')
+    deleteProfField(@Param('id') id: number) {
+        this.profFieldService.deleteProfField(id);
+    }
+
+    @Post('/:id')
+    updateProfField(@Param('id') id: number, @Body() dto: CreateProfFieldDto) {
+        this.profFieldService.updateProfField(id, dto);
     }
 }
