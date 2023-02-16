@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete } from '@nestjs/common';
 import { CitysService } from './citys.service';
 import { CreateCityDto } from './dto/create-city.dto';
+import { DeleteCityDto } from './dto/delete-city.dto';
 
 @Controller('citys')
 export class CitysController {
@@ -15,5 +16,10 @@ export class CitysController {
     @Get()
     getAllCitys() {
         return this.citysService.getAllCitys();
+    }
+
+    @Delete()
+    deleteCity(@Body() dto: DeleteCityDto) {
+        this.citysService.deleteCity(dto);
     }
 }
