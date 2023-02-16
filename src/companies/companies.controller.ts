@@ -21,4 +21,9 @@ export class CompaniesController {
     deleteCompany(@Param('id') id: number) {
         this.companiesService.deleteCompany(id);
     }
+
+    @Post('/:id')
+    updateCompany(@Param('id') id: number, @Body() dto: CreateCompanyDto) {
+        this.companiesService.updateCompany(id, dto);
+    }
 }

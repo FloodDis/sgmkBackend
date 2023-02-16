@@ -27,6 +27,10 @@ export class CompaniesService {
     }
 
     async deleteCompany(id: number) {
-        return this.companyRepository.delete(id);
+        return await this.companyRepository.delete(id);
+    }
+
+    async updateCompany(id: number, dto: CreateCompanyDto) {
+        return await this.companyRepository.update(id, dto);
     }
 }
