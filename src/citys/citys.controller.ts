@@ -18,9 +18,9 @@ export class CitysController {
         return this.citysService.getAllCitys();
     }
 
-    @Delete()
-    deleteCity(@Body() dto: DeleteCityDto) {
-        this.citysService.deleteCity(dto);
+    @Delete('/:id')
+    deleteCity(@Param('id') id: number) {
+        this.citysService.deleteCity(id);
     }
 
     @Post('/:id')
