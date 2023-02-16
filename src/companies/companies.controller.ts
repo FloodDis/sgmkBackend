@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CompaniesService } from './companies.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 
@@ -15,5 +15,10 @@ export class CompaniesController {
     @Post()
     createCompany(@Body() companyDto: CreateCompanyDto) {
         this.companiesService.createCompany(companyDto);
+    }
+
+    @Delete('/:id')
+    deleteCompany(@Param('id') id: number) {
+        this.companiesService.deleteCompany(id);
     }
 }
