@@ -4,5 +4,4 @@ export class CreateCompanyDto {
 
     readonly company_name: string;
 
-    readonly vacancy: CreateVacancyDto;
 }
