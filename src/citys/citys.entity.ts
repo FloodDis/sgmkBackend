@@ -16,4 +16,5 @@ export class City {
 
     @ManyToOne(() => Region, (region) => region.cities, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     region: Region;
+
 }

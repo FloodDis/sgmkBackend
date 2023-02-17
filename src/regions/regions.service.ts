@@ -30,4 +30,10 @@ export class RegionsService {
     async updateRegion(id: number, dto: CreateRegionDto) {
         this.regionRepository.update(id, { region_name: dto.region_name });
     }
+
+    async findRegionById(id: number) {
+        const region = await this.regionRepository.findOne({ where: { region_id: id } });
+
+        return region;
+    }
 }
