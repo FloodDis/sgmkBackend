@@ -12,12 +12,17 @@ export class ProfFieldService {
 
     async getAllProfFields() {
         const profFields = this.profRepository.find();
+
         return (await profFields).map((x) => new ProfFieldResponceDto(x));
     }
 
     async createProfField(profDto: CreateProfFieldDto) {
-        const profField = this.profRepository.create(profDto);
-        this.profRepository.save(profField);
+        const profField = new ProfField();
+
+        profField.prof_name = profDto.prof_name;
+
+        await this.profRepository.save(profField);
+
         return profField;
     }
 
