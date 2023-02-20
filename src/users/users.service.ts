@@ -27,11 +27,13 @@ export class UsersService {
 
     async getUserByEmail(email: string) {
         const user = await this.userRepository.findOne({ where: { email } });
+
         return user;
     }
 
     async geyAllUsers() {
         const users = this.userRepository.find();
+
         return (await users).map((x) => new UserResponceDto(x));
     }
 
