@@ -1,6 +1,6 @@
 import { Region } from 'src/regions/regions.entity';
 import { Vacancy } from 'src/vacancy/vacancy.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('city')
 export class City {
@@ -15,6 +15,7 @@ export class City {
     vacancies: Vacancy[];
 
     @ManyToOne(() => Region, (region) => region.cities)
+    @JoinColumn({ name: 'region_id' })
     region: Region;
 
 }
