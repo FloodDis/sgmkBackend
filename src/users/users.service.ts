@@ -10,16 +10,18 @@ export class UsersService {
 
     constructor(@InjectRepository(User) private userRepository: Repository<User>) { };
 
-    async createUser(dto: CreateUserDto) {
+    async createUser(userDto: CreateUserDto) {
 
         const user = new User();
 
-        user.email = dto.email;
-        user.password = dto.password;
-        user.name = dto.name;
-        user.surname = dto.surname;
-        user.patronymic = dto.patronymic;
-        user.role = dto.role;
+        user.email = userDto.email;
+        user.password = userDto.password;
+        user.name = userDto.name;
+        user.surname = userDto.surname;
+        user.patronymic = userDto.patronymic;
+        user.role = userDto.role;
+        user.vacancies = [];
+
         await this.userRepository.save(user);
 
         return user;
@@ -31,7 +33,7 @@ export class UsersService {
         return user;
     }
 
-    async geyAllUsers() {
+    async getAllUsers() {
         const users = this.userRepository.find();
 
         return (await users).map((x) => new UserResponceDto(x));
@@ -41,14 +43,14 @@ export class UsersService {
         await this.userRepository.delete({ user_id: id });
     }
 
-    async updateUser(id: number, dto: CreateUserDto) {
+    async updateUser(id: number, userDto: CreateUserDto) {
         await this.userRepository.update(id, {
-            surname: dto.surname,
-            name: dto.name,
-            patronymic: dto.patronymic,
-            email: dto.email,
-            password: dto.password,
-            role: dto.role
+            surname: userDto.surname,
+            name: userDto.name,
+            patronymic: userDto.patronymic,
+            email: userDto.email,
+            password: userDto.password,
+            role: userDto.role
         });
     }
 
