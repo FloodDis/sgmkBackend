@@ -48,11 +48,24 @@ export class VacancyService {
         await this.vacancyRepository.delete({ vacancy_id: id });
     }
 
-    async updateVacancy(id: number, dto: CreateVacancyDto) {
+    async updateVacancy(id: number, vacancyDto: CreateVacancyDto) {
+        const updatedCity = vacancyDto.city_id ? await this.cityService.getCityById(vacancyDto.city_id) : await this.cityService.createCity(vacancyDto.city);
+        const updatedCompany = vacancyDto.company_id ? await this.companyService.findCompanyById(vacancyDto.company_id) : await this.companyService.createCompany(vacancyDto.company);
+        const updatedProfFields = [];
+
+        for (const prof of vacancyDto.prof_fields) {
+            const newProfField = prof.prof_id ? await this.profFieldService.findProfFieldById(prof.prof_id) : await this.profFieldService.createProfField(prof);
+
+            updatedProfFields.push(newProfField);
+        }
+
         await this.vacancyRepository.update(id, {
-            vacancy_name: dto.vacancy_name,
-            salary: dto.salary,
-            description: dto.description,
+            vacancy_name: vacancyDto.vacancy_name,
+            salary: vacancyDto.salary,
+            description: vacancyDto.description,
+            city: updatedCity,
+            company: updatedCompany,
+            prof_fields: updatedProfFields
         })
     }
 }
