@@ -59,13 +59,14 @@ export class VacancyService {
             updatedProfFields.push(newProfField);
         }
 
-        await this.vacancyRepository.update(id, {
-            vacancy_name: vacancyDto.vacancy_name,
-            salary: vacancyDto.salary,
-            description: vacancyDto.description,
-            city: updatedCity,
-            company: updatedCompany,
-            prof_fields: updatedProfFields
-        })
+        const vacancyToUpdate = await this.vacancyRepository.findOne({ where: { vacancy_id: id } });
+        vacancyToUpdate.vacancy_name = vacancyDto.vacancy_name;
+        vacancyToUpdate.salary = vacancyDto.salary;
+        vacancyToUpdate.description = vacancyDto.description;
+        vacancyToUpdate.city = updatedCity;
+        vacancyToUpdate.company = updatedCompany;
+        vacancyToUpdate.prof_fields = updatedProfFields;
+
+        await this.vacancyRepository.save(vacancyToUpdate);
     }
 }
