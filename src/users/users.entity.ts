@@ -1,7 +1,7 @@
 import { Vacancy } from 'src/vacancy/vacancy.entity';
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('users')
+@Entity('user')
 export class User {
 
     @PrimaryGeneratedColumn({ type: 'int' })
@@ -26,6 +26,10 @@ export class User {
     role: string;
 
     @ManyToMany(() => Vacancy, (vacancy) => vacancy.users)
-    @JoinTable({ name: 'users-vacancy' })
+    @JoinTable({
+        name: 'user_vacancy',
+        joinColumn: { name: 'user_id' },
+        inverseJoinColumn: { name: 'vacancy_id' }
+    })
     vacancies: Vacancy[];
 }

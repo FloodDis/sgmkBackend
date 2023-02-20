@@ -2,7 +2,7 @@ import { Vacancy } from 'src/vacancy/vacancy.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 
-@Entity('companies')
+@Entity('company')
 export class Company {
 
     @PrimaryGeneratedColumn()

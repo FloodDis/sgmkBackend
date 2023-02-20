@@ -5,7 +5,7 @@ import { User } from 'src/users/users.entity';
 import { Column, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 
-@Entity('vacancies')
+@Entity('vacancy')
 export class Vacancy {
 
     @PrimaryGeneratedColumn({ type: 'int' })
@@ -24,11 +24,18 @@ export class Vacancy {
     city: City;
 
     @ManyToMany(() => User, (user) => user.vacancies)
-    @JoinTable({ name: 'users-vacancy' })
     users: User[];
 
     @ManyToMany(() => ProfField, (profField) => profField.vacancies)
-    @JoinTable({ name: 'prof_field-vacancy' })
+    @JoinTable({
+        name: 'vacancy_prof-field',
+        joinColumn: {
+            name: 'vacancy_id'
+        },
+        inverseJoinColumn: {
+            name: 'prof-field_id'
+        }
+    })
     prof_fields: ProfField[];
 
     @ManyToOne(() => Company, (company) => company.vacancies)

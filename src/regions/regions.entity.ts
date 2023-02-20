@@ -2,7 +2,7 @@ import { City } from 'src/citys/citys.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 
-@Entity('regions')
+@Entity('region')
 export class Region {
 
     @PrimaryGeneratedColumn()

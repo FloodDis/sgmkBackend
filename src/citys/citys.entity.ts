@@ -2,7 +2,7 @@ import { Region } from 'src/regions/regions.entity';
 import { Vacancy } from 'src/vacancy/vacancy.entity';
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('citys')
+@Entity('city')
 export class City {
 
     @PrimaryGeneratedColumn({ type: 'int' })
