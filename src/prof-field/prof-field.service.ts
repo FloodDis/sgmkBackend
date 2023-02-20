@@ -33,15 +33,4 @@ export class ProfFieldService {
     async updateProfField(id: number, dto: CreateProfFieldDto) {
         this.profRepository.update(id, { prof_name: dto.prof_name });
     }
-
-    /* async getProfFieldsById(profFieldsId: number[]) {
-        let profFields: ProfField[];
-        let profFieldValue: ProfField;
-        for (let i = 0; i < profFieldsId.length; i++) {
-            profFieldValue = this.profRepository.find({ where: { 
-                prof_id: profFieldsId[i]
-            }});
-            
-        }
-    } */
 }
