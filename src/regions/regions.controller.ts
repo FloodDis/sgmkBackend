@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { CreateRegionDto } from './dto/create-region.dto';
 import { RegionsService } from './regions.service';
 
-@Controller('regions')
+@Controller('region')
 export class RegionsController {
 
     constructor(private regionService: RegionsService) { }
