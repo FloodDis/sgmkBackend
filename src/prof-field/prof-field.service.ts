@@ -26,6 +26,12 @@ export class ProfFieldService {
         return profField;
     }
 
+    async findProfFieldById(id: number) {
+        const profField = this.profRepository.findOne({ where: { prof_id: id } });
+
+        return profField;
+    }
+
     async deleteProfField(id: number) {
         this.profRepository.delete({ prof_id: id });
     }

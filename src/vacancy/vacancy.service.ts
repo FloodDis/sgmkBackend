@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CitysService } from 'src/citys/citys.service';
 import { CompaniesService } from 'src/companies/companies.service';
+import { ProfFieldService } from 'src/prof-field/prof-field.service';
 import { Repository } from 'typeorm';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
 import { VacancyResponseDto } from './dto/vacancy-responce.dto';
@@ -12,7 +13,8 @@ export class VacancyService {
 
     constructor(@InjectRepository(Vacancy) private vacancyRepository: Repository<Vacancy>,
         private cityService: CitysService,
-        private companyService: CompaniesService) { }
+        private companyService: CompaniesService,
+        private profFieldService: ProfFieldService) { }
 
     async getAllVacancies() {
         const vacancies = await this.vacancyRepository.find();
@@ -26,9 +28,16 @@ export class VacancyService {
         vacancy.salary = vacancyDto.salary;
         vacancy.description = vacancyDto.description;
         vacancy.city =
-            vacancyDto.cityId ? await this.cityService.getCityById(vacancyDto.cityId) : await this.cityService.createCity(vacancyDto.city);
+            vacancyDto.city_id ? await this.cityService.getCityById(vacancyDto.city_id) : await this.cityService.createCity(vacancyDto.city);
         vacancy.company =
-            vacancyDto.companyId ? await this.companyService.findCompanyById(vacancyDto.companyId) : await this.companyService.createCompany(vacancyDto.company);
+            vacancyDto.company_id ? await this.companyService.findCompanyById(vacancyDto.company_id) : await this.companyService.createCompany(vacancyDto.company);
+
+        vacancy.prof_fields = [];
+        for (const prof of vacancyDto.prof_fields) {
+            const newProfField = prof.prof_id ? await this.profFieldService.findProfFieldById(prof.prof_id) : await this.profFieldService.createProfField(prof);
+
+            vacancy.prof_fields.push(newProfField);
+        }
 
         await this.vacancyRepository.save(vacancy);
 

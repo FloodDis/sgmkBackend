@@ -11,10 +11,10 @@ export class CreateVacancyDto {
     readonly description: string;
 
     readonly city?: CreateCityDto;
-    readonly cityId?: number;
+    readonly city_id?: number;
 
     readonly company?: CreateCompanyDto;
-    readonly companyId?: number;
+    readonly company_id?: number;
 
     readonly prof_fields: CreateProfFieldDto[];
 }

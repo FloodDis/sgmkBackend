@@ -7,6 +7,7 @@ import { ProfFieldService } from './prof-field.service';
 @Module({
   imports: [TypeOrmModule.forFeature([ProfField])],
   controllers: [ProfFieldController],
-  providers: [ProfFieldService]
+  providers: [ProfFieldService],
+  exports: [ProfFieldService]
 })
 export class ProfFieldModule { }
