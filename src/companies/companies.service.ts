@@ -33,4 +33,8 @@ export class CompaniesService {
     async updateCompany(id: number, dto: CreateCompanyDto) {
         return await this.companyRepository.update(id, dto);
     }
+
+    async findCompanyById(id: number) {
+        return await this.companyRepository.findOne({ where: { company_id: id } });
+    }
 }

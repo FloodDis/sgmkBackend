@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CitysService } from 'src/citys/citys.service';
+import { CompaniesService } from 'src/companies/companies.service';
 import { Repository } from 'typeorm';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
 import { VacancyResponseDto } from './dto/vacancy-responce.dto';
@@ -10,7 +11,8 @@ import { Vacancy } from './vacancy.entity';
 export class VacancyService {
 
     constructor(@InjectRepository(Vacancy) private vacancyRepository: Repository<Vacancy>,
-        private cityService: CitysService) { }
+        private cityService: CitysService,
+        private companyService: CompaniesService) { }
 
     async getAllVacancies() {
         const vacancies = await this.vacancyRepository.find();
@@ -25,6 +27,8 @@ export class VacancyService {
         vacancy.description = vacancyDto.description;
         vacancy.city =
             vacancyDto.cityId ? await this.cityService.getCityById(vacancyDto.cityId) : await this.cityService.createCity(vacancyDto.city);
+        vacancy.company =
+            vacancyDto.companyId ? await this.companyService.findCompanyById(vacancyDto.companyId) : await this.companyService.createCompany(vacancyDto.company);
 
         await this.vacancyRepository.save(vacancy);
 
