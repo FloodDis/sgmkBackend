@@ -8,22 +8,22 @@ export class RegionsController {
     constructor(private regionService: RegionsService) { }
 
     @Get()
-    getAllRegions() {
-        return this.regionService.getAllRegions();
+    async getAllRegions() {
+        return await this.regionService.getAllRegions();
     }
 
     @Post()
-    createRegion(@Body() regionDto: CreateRegionDto) {
-        this.regionService.createRegion(regionDto);
+    async createRegion(@Body() regionDto: CreateRegionDto) {
+        await this.regionService.createRegion(regionDto);
     }
 
     @Delete('/:id')
-    deleteRegion(@Param('id') id: number) {
-        this.regionService.deleteRegion(id);
+    async deleteRegion(@Param('id') id: number) {
+        await this.regionService.deleteRegion(id);
     }
 
     @Post('/:id')
-    updateRegion(@Param('id') id: number, @Body() dto: CreateRegionDto) {
-        this.regionService.updateRegion(id, dto);
+    async updateRegion(@Param('id') id: number, @Body() dto: CreateRegionDto) {
+        await this.regionService.updateRegion(id, dto);
     }
 }

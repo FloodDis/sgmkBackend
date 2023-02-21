@@ -8,22 +8,22 @@ export class CompaniesController {
     constructor(private companiesService: CompaniesService) { }
 
     @Get()
-    getAllCompanies() {
-        return this.companiesService.getAllCompanies();
+    async getAllCompanies() {
+        return await this.companiesService.getAllCompanies();
     }
 
     @Post()
-    createCompany(@Body() companyDto: CreateCompanyDto) {
-        this.companiesService.createCompany(companyDto);
+    async createCompany(@Body() companyDto: CreateCompanyDto) {
+        await this.companiesService.createCompany(companyDto);
     }
 
     @Delete('/:id')
-    deleteCompany(@Param('id') id: number) {
-        this.companiesService.deleteCompany(id);
+    async deleteCompany(@Param('id') id: number) {
+        await this.companiesService.deleteCompany(id);
     }
 
     @Post('/:id')
-    updateCompany(@Param('id') id: number, @Body() dto: CreateCompanyDto) {
-        this.companiesService.updateCompany(id, dto);
+    async updateCompany(@Param('id') id: number, @Body() dto: CreateCompanyDto) {
+        await this.companiesService.updateCompany(id, dto);
     }
 }

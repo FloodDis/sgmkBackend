@@ -8,22 +8,22 @@ export class ProfFieldController {
     constructor(private profFieldService: ProfFieldService) { }
 
     @Post()
-    createProfField(@Body() profDto: CreateProfFieldDto) {
-        return this.profFieldService.createProfField(profDto);
+    async createProfField(@Body() profDto: CreateProfFieldDto) {
+        return await this.profFieldService.createProfField(profDto);
     }
 
     @Get()
-    getAllProfFields() {
-        return this.profFieldService.getAllProfFields();
+    async getAllProfFields() {
+        return await this.profFieldService.getAllProfFields();
     }
 
     @Delete('/:id')
-    deleteProfField(@Param('id') id: number) {
-        this.profFieldService.deleteProfField(id);
+    async deleteProfField(@Param('id') id: number) {
+        await this.profFieldService.deleteProfField(id);
     }
 
     @Post('/:id')
-    updateProfField(@Param('id') id: number, @Body() dto: CreateProfFieldDto) {
-        this.profFieldService.updateProfField(id, dto);
+    async updateProfField(@Param('id') id: number, @Body() dto: CreateProfFieldDto) {
+        await this.profFieldService.updateProfField(id, dto);
     }
 }

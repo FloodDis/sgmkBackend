@@ -8,23 +8,23 @@ export class CitysController {
     constructor(private citysService: CitysService) { }
 
     @Post()
-    createCity(@Body() cityDto: CreateCityDto) {
-        return this.citysService.createCity(cityDto);
+    async createCity(@Body() cityDto: CreateCityDto) {
+        return await this.citysService.createCity(cityDto);
     }
 
     @Get()
-    getAllCitys() {
-        return this.citysService.getAllCitys();
+    async getAllCitys() {
+        return await this.citysService.getAllCitys();
     }
 
     @Delete('/:id')
-    deleteCity(@Param('id') id: number) {
-        this.citysService.deleteCity(id);
+    async deleteCity(@Param('id') id: number) {
+        await this.citysService.deleteCity(id);
     }
 
     @Post('/:id')
-    updateCity(@Param('id') id: number, @Body() dto: CreateCityDto) {
-        this.citysService.updateCity(id, dto);
+    async updateCity(@Param('id') id: number, @Body() dto: CreateCityDto) {
+        await this.citysService.updateCity(id, dto);
     }
 
 }

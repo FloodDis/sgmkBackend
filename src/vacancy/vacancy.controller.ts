@@ -8,22 +8,22 @@ export class VacancyController {
     constructor(private vacancyService: VacancyService) { }
 
     @Get()
-    getAllVacancies() {
-        return this.vacancyService.getAllVacancies();
+    async getAllVacancies() {
+        return await this.vacancyService.getAllVacancies();
     }
 
     @Post()
-    createVacancy(@Body() vacancyDto: CreateVacancyDto) {
-        this.vacancyService.createVacancy(vacancyDto);
+    async createVacancy(@Body() vacancyDto: CreateVacancyDto) {
+        await this.vacancyService.createVacancy(vacancyDto);
     }
 
     @Delete('/:id')
-    deleteVacancy(@Param('id') id: number) {
-        this.vacancyService.deleteVacancy(id);
+    async deleteVacancy(@Param('id') id: number) {
+        await this.vacancyService.deleteVacancy(id);
     }
 
     @Post('/:id')
-    updateVacancy(@Param('id') id: number, @Body() dto: CreateVacancyDto) {
-        this.vacancyService.updateVacancy(id, dto);
+    async updateVacancy(@Param('id') id: number, @Body() dto: CreateVacancyDto) {
+        await this.vacancyService.updateVacancy(id, dto);
     }
 }

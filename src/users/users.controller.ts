@@ -9,28 +9,28 @@ export class UsersController {
     constructor(private usersService: UsersService) { }
 
     @Post()
-    createUser(@Body() userDto: CreateUserDto) {
-        this.usersService.createUser(userDto);
+    async createUser(@Body() userDto: CreateUserDto) {
+        await this.usersService.createUser(userDto);
     }
 
     @Get()
-    getAllUsers() {
-        return this.usersService.getAllUsers();
+    async getAllUsers() {
+        return await this.usersService.getAllUsers();
     }
 
     @Delete('/:id')
-    deleteUser(@Param('id') id: number) {
-        this.usersService.deleteUser(id);
+    async deleteUser(@Param('id') id: number) {
+        await this.usersService.deleteUser(id);
     }
 
     @Post('/vacancy')
-    updateUserVacancy(@Headers('X-USER-ID') userId: number, @Body() vacanciesId: UpdateVacanciesDto) {
-        this.usersService.updateVacancies(userId, vacanciesId);
+    async updateUserVacancy(@Headers('X-USER-ID') userId: number, @Body() vacanciesId: UpdateVacanciesDto) {
+        await this.usersService.updateVacancies(userId, vacanciesId);
     }
 
     @Post('/:id')
-    updateUser(@Param('id') id: number, @Body() dto: CreateUserDto) {
-        this.usersService.updateUser(id, dto);
+    async updateUser(@Param('id') id: number, @Body() dto: CreateUserDto) {
+        await this.usersService.updateUser(id, dto);
     }
 
 }
