@@ -14,7 +14,7 @@ export class Vacancy {
     @Column({ type: 'text' })
     vacancy_name: string;
 
-    @Column({ type: 'money' })
+    @Column({ type: 'numeric', nullable: true })
     salary: number;
 
     @Column({ type: 'text' })
