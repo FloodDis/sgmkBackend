@@ -16,5 +16,5 @@ export class CreateVacancyDto {
     readonly company?: CreateCompanyDto;
     readonly company_id?: number;
 
-    readonly prof_fields: CreateProfFieldDto[];
+    readonly prof_fields?: CreateProfFieldDto[];
 }

@@ -15,6 +15,7 @@ import { VacancyService } from './vacancy.service';
     ProfFieldModule
   ],
   controllers: [VacancyController],
-  providers: [VacancyService]
+  providers: [VacancyService],
+  exports: [VacancyService]
 })
 export class VacancyModule { }

@@ -5,6 +5,5 @@ export class CreateCityDto {
     readonly city_name: string;
 
     readonly region_id?: number;
-
     readonly region?: CreateRegionDto;
 }

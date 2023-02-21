@@ -1,14 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { VacancyService } from 'src/vacancy/vacancy.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateVacanciesDto } from './dto/update-vacancies.dto';
 import { UserResponceDto } from './dto/user-responce.dto';
 import { User } from './users.entity';
 
 @Injectable()
 export class UsersService {
 
-    constructor(@InjectRepository(User) private userRepository: Repository<User>) { };
+    constructor(
+        @InjectRepository(User) private userRepository: Repository<User>,
+        private vacancyService: VacancyService
+    ) { };
 
     async createUser(userDto: CreateUserDto) {
 
@@ -34,9 +39,9 @@ export class UsersService {
     }
 
     async getAllUsers() {
-        const users = this.userRepository.find();
+        const users = await this.userRepository.find();
 
-        return (await users).map((x) => new UserResponceDto(x));
+        return users.map((x) => new UserResponceDto(x));
     }
 
     async deleteUser(id: number) {
@@ -52,6 +57,18 @@ export class UsersService {
             password: userDto.password,
             role: userDto.role
         });
+    }
+
+    async updateVacancies(userId: number, vacanciesId: UpdateVacanciesDto) {
+        const userToUpdate = await this.userRepository.findOne({ where: { user_id: userId } });
+        userToUpdate.vacancies = [];
+
+        for (const id of vacanciesId.vacancies_id) {
+            const vacancy = await this.vacancyService.getVacancyById(id);
+            userToUpdate.vacancies.push(vacancy);
+        }
+
+        await this.userRepository.save(userToUpdate);
     }
 
 }

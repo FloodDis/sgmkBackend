@@ -69,4 +69,10 @@ export class VacancyService {
 
         await this.vacancyRepository.save(vacancyToUpdate);
     }
+
+    async getVacancyById(id: number) {
+        const vacancy = this.vacancyRepository.findOne({ where: { vacancy_id: id } });
+
+        return vacancy;
+    }
 }

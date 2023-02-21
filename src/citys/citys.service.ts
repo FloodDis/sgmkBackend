@@ -44,6 +44,11 @@ export class CitysService {
     }
 
     async updateCity(id: number, dto: CreateCityDto) {
+        const cityToUpdate = await this.cityRepository.findOne({ where: { city_id: id } });
+
+        cityToUpdate.city_name = dto.city_name;
+        cityToUpdate.region = dto.region_id ? await this.regionsService.findRegionById(dto.region_id) : await this.regionsService.createRegion(dto.region);
+
         return await this.cityRepository.update(id, dto);
     }
 
