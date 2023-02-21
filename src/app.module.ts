@@ -13,6 +13,7 @@ import { RegionsModule } from './regions/regions.module';
 import { Region } from './regions/regions.entity';
 import { CompaniesModule } from './companies/companies.module';
 import { Company } from './companies/companies.entity';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -36,7 +37,8 @@ import { Company } from './companies/companies.entity';
     ProfFieldModule,
     VacancyModule,
     RegionsModule,
-    CompaniesModule
+    CompaniesModule,
+    AuthModule
   ],
   controllers: [],
   providers: [],
