@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateProfFieldDto } from './dto/create-prof-field.dto';
 import { ProfFieldService } from './prof-field.service';
 
 @Controller('prof-field')
+@UseGuards(JwtAuthGuard)
 export class ProfFieldController {
 
     constructor(private profFieldService: ProfFieldService) { }

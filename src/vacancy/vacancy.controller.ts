@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
 import { VacancyService } from './vacancy.service';
 
 @Controller('vacancy')
+@UseGuards(JwtAuthGuard)
 export class VacancyController {
 
     constructor(private vacancyService: VacancyService) { }
@@ -27,3 +29,4 @@ export class VacancyController {
         await this.vacancyService.updateVacancy(id, dto);
     }
 }
+

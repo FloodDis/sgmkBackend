@@ -14,6 +14,8 @@ import { Region } from './regions/regions.entity';
 import { CompaniesModule } from './companies/companies.module';
 import { Company } from './companies/companies.entity';
 import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 
 @Module({
@@ -38,7 +40,7 @@ import { AuthModule } from './auth/auth.module';
     VacancyModule,
     RegionsModule,
     CompaniesModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [],
   providers: [],

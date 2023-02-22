@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Delete, Param, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CitysService } from './citys.service';
 import { CreateCityDto } from './dto/create-city.dto';
 
 @Controller('city')
+@UseGuards(JwtAuthGuard)
 export class CitysController {
 
     constructor(private citysService: CitysService) { }

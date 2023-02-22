@@ -1,8 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateRegionDto } from './dto/create-region.dto';
 import { RegionsService } from './regions.service';
 
 @Controller('region')
+@UseGuards(JwtAuthGuard)
 export class RegionsController {
 
     constructor(private regionService: RegionsService) { }
