@@ -14,6 +14,7 @@ import { Region } from './regions/regions.entity';
 import { CompaniesModule } from './companies/companies.module';
 import { Company } from './companies/companies.entity';
 import { AuthModule } from './auth/auth.module';
+import { SocialNetworkModule } from './social-network/social-network.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { AuthModule } from './auth/auth.module';
     RegionsModule,
     CompaniesModule,
     AuthModule,
+    SocialNetworkModule,
   ],
   controllers: [],
   providers: [],
