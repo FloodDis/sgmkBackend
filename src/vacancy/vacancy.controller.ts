@@ -15,11 +15,14 @@ export class VacancyController {
         return await this.vacancyService.getAllVacancies();
     }
 
-    @Post('/sort')
-    async getFilterVacancies(@Query('cityIds', new ParseArrayPipe({ items: Number, separator: ',' }))
-    cityIds: number[]
+    @Get('/sort')
+    async getFilterVacancies(
+        @Query('cityIds', new ParseArrayPipe({ items: Number, separator: ',', optional: true }))
+        cityIds?: number[],
+        @Query('profFieldIds', new ParseArrayPipe({ items: Number, separator: ',', optional: true }))
+        profFieldIds?: number[]
     ) {
-        return await this.getFilterVacancies(cityIds);
+        return await this.vacancyService.getFilterVacancies(cityIds, profFieldIds);
     }
 
     @Post()

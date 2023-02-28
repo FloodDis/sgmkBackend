@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CitysService } from 'src/citys/citys.service';
 import { CompaniesService } from 'src/companies/companies.service';
 import { ProfFieldService } from 'src/prof-field/prof-field.service';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CreateVacancyDto } from './dto/create-vacancy.dto';
 import { VacancyResponseDto } from './dto/vacancy-responce.dto';
 import { Vacancy } from './vacancy.entity';
@@ -80,13 +80,55 @@ export class VacancyService {
         return vacancy;
     }
 
-    async getSortVacancies(cityIds: number[]) {
+    async getFilterVacancies(cityIds?: number[], profFieldIds?: number[]) {
 
-        const filterVacancies = [];
+        // const filterVacancies = [];
 
-        for (const cityId of cityIds) {
-            const vacancy = this.vacancyRepository.find({ where: { city: await this.cityService.getCityById(cityId) } })
-            filterVacancies.push(vacancy);
+        // for (const cityId of cityIds) {
+        //     for (const profFieldId of profFieldIds) {
+        //         const vacancy = await this.vacancyRepository.find({
+        //             where: {
+        //                 city: await this.cityService.getCityById(cityId),
+        //                 prof_fields: await this.profFieldService.findProfFieldById(profFieldId)
+        //             }
+        //         })
+        //         filterVacancies.push(...vacancy);
+        //     }
+        // }
+
+        let filterVacancies = [];
+
+        if (cityIds && profFieldIds) {
+            filterVacancies = await this.vacancyRepository.find({
+                where: {
+                    city: {
+                        city_id: In(cityIds)
+                    },
+                    prof_fields: {
+                        prof_id: In(profFieldIds)
+                    }
+                }
+            })
+        }
+
+        if (!cityIds && profFieldIds) {
+            filterVacancies = await this.vacancyRepository.find({
+                where: {
+                    prof_fields: {
+                        prof_id: In(profFieldIds)
+                    }
+                }
+            })
+        }
+
+        if (cityIds && !profFieldIds) {
+            filterVacancies = await this.vacancyRepository.find({
+                where: {
+                    city: {
+                        city_id: In(cityIds)
+                    }
+                }
+            })
         }
 
         return filterVacancies;
