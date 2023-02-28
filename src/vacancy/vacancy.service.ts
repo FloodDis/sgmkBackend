@@ -18,11 +18,6 @@ export class VacancyService {
         private profFieldService: ProfFieldService
     ) { }
 
-    async getAllVacancies() {
-        const vacancies = await this.vacancyRepository.find();
-        return vacancies.map(x => new VacancyResponseDto(x));
-    }
-
     async createVacancy(vacancyDto: CreateVacancyDto) {
         const vacancy = new Vacancy();
 
@@ -82,20 +77,6 @@ export class VacancyService {
 
     async getFilterVacancies(cityIds?: number[], profFieldIds?: number[]) {
 
-        // const filterVacancies = [];
-
-        // for (const cityId of cityIds) {
-        //     for (const profFieldId of profFieldIds) {
-        //         const vacancy = await this.vacancyRepository.find({
-        //             where: {
-        //                 city: await this.cityService.getCityById(cityId),
-        //                 prof_fields: await this.profFieldService.findProfFieldById(profFieldId)
-        //             }
-        //         })
-        //         filterVacancies.push(...vacancy);
-        //     }
-        // }
-
         let filterVacancies = [];
 
         if (cityIds && profFieldIds) {
@@ -131,6 +112,10 @@ export class VacancyService {
             })
         }
 
-        return filterVacancies;
+        if (!cityIds && !profFieldIds) {
+            filterVacancies = await this.vacancyRepository.find();
+        }
+
+        return filterVacancies.map(x => new VacancyResponseDto(x));
     }
 }

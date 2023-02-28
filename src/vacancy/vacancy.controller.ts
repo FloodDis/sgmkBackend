@@ -11,11 +11,6 @@ export class VacancyController {
     constructor(private vacancyService: VacancyService) { }
 
     @Get()
-    async getAllVacancies() {
-        return await this.vacancyService.getAllVacancies();
-    }
-
-    @Get('/sort')
     async getFilterVacancies(
         @Query('cityIds', new ParseArrayPipe({ items: Number, separator: ',', optional: true }))
         cityIds?: number[],
