@@ -11,10 +11,12 @@ import { Vacancy } from './vacancy.entity';
 @Injectable()
 export class VacancyService {
 
-    constructor(@InjectRepository(Vacancy) private vacancyRepository: Repository<Vacancy>,
+    constructor(
+        @InjectRepository(Vacancy) private vacancyRepository: Repository<Vacancy>,
         private cityService: CitysService,
         private companyService: CompaniesService,
-        private profFieldService: ProfFieldService) { }
+        private profFieldService: ProfFieldService
+    ) { }
 
     async getAllVacancies() {
         const vacancies = await this.vacancyRepository.find();
@@ -49,8 +51,10 @@ export class VacancyService {
     }
 
     async updateVacancy(id: number, vacancyDto: CreateVacancyDto) {
-        const updatedCity = vacancyDto.city_id ? await this.cityService.getCityById(vacancyDto.city_id) : await this.cityService.createCity(vacancyDto.city);
-        const updatedCompany = vacancyDto.company_id ? await this.companyService.findCompanyById(vacancyDto.company_id) : await this.companyService.createCompany(vacancyDto.company);
+        const updatedCity =
+            vacancyDto.city_id ? await this.cityService.getCityById(vacancyDto.city_id) : await this.cityService.createCity(vacancyDto.city);
+        const updatedCompany =
+            vacancyDto.company_id ? await this.companyService.findCompanyById(vacancyDto.company_id) : await this.companyService.createCompany(vacancyDto.company);
         const updatedProfFields = [];
 
         for (const prof of vacancyDto.prof_fields) {
@@ -74,5 +78,17 @@ export class VacancyService {
         const vacancy = this.vacancyRepository.findOne({ where: { vacancy_id: id } });
 
         return vacancy;
+    }
+
+    async getSortVacancies(cityIds: number[]) {
+
+        const filterVacancies = [];
+
+        for (const cityId of cityIds) {
+            const vacancy = this.vacancyRepository.find({ where: { city: await this.cityService.getCityById(cityId) } })
+            filterVacancies.push(vacancy);
+        }
+
+        return filterVacancies;
     }
 }
