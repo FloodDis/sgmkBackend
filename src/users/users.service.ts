@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FileService } from 'src/file/file.service';
 import { InterestService } from 'src/interest/interest.service';
 import { VacancyService } from 'src/vacancy/vacancy.service';
 import { Repository } from 'typeorm';
@@ -15,7 +16,8 @@ export class UsersService {
     constructor(
         @InjectRepository(User) private userRepository: Repository<User>,
         private vacancyService: VacancyService,
-        private interestService: InterestService
+        private interestService: InterestService,
+        private fileService: FileService
     ) { };
 
     async createUser(userDto: CreateUserDto) {
@@ -36,8 +38,14 @@ export class UsersService {
         return user;
     }
 
+    async getUserById(id: number) {
+        const user = await this.userRepository.findOne({ where: { user_id: id } });
+
+        return user;
+    }
+
     async getUserByEmail(email: string) {
-        const user = await this.userRepository.findOne({ where: { email } });
+        const user = await this.userRepository.findOne({ where: { email: email } });
 
         return user;
     }
@@ -53,14 +61,19 @@ export class UsersService {
     }
 
     async updateUser(id: number, userDto: CreateUserDto) {
-        await this.userRepository.update(id, {
-            surname: userDto.surname,
-            name: userDto.name,
-            patronymic: userDto.patronymic,
-            email: userDto.email,
-            password: userDto.password,
-            role: userDto.role
-        });
+        const user = await this.getUserById(id);
+
+        user.surname = userDto.surname;
+        user.name = userDto.name;
+        user.patronymic = userDto.patronymic;
+        user.email = userDto.email;
+        user.password = userDto.password;
+        user.role = userDto.role;
+
+        const photo = await this.fileService.getFileById(userDto.photo_id);
+        user.photo = photo;
+
+        this.userRepository.save(user);
     }
 
     async updateVacancies(userId: number, vacanciesId: UpdateVacanciesDto) {

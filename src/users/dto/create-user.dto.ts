@@ -13,4 +13,6 @@ export class CreateUserDto {
     readonly password: string;
 
     readonly role: string;
+
+    readonly photo_id: number;
 }

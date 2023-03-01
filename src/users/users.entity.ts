@@ -1,6 +1,7 @@
+import { File } from 'src/file/file.entity';
 import { Interest } from 'src/interest/interest.entity';
 import { Vacancy } from 'src/vacancy/vacancy.entity';
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('user')
 export class User {
@@ -41,5 +42,9 @@ export class User {
         inverseJoinColumn: { name: 'interest_id' }
     })
     interests: Interest[];
+
+    @OneToOne(() => File)
+    @JoinColumn({ name: 'photo_id' })
+    photo: File;
 
 }

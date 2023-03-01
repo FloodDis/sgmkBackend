@@ -31,7 +31,7 @@ export class FileService {
         return files.map((x) => new FileResponceDto(x))
     }
 
-    private async getFileById(id: number) {
+    async getFileById(id: number) {
         const file = this.fileRepository.findOne({
             where: {
                 file_id: id
