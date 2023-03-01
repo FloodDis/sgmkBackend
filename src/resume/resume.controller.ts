@@ -1,8 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { RoleGuard } from 'src/auth/guards/role.guard';
 import { CreateResumeDto } from './dto/create-resume.dto';
 import { ResumeService } from './resume.service';
 
 @Controller('resume')
+@UseGuards(JwtAuthGuard)
 export class ResumeController {
 
     constructor(private resumeService: ResumeService) { }
@@ -23,6 +26,7 @@ export class ResumeController {
     }
 
     @Get()
+    @UseGuards(RoleGuard)
     async getAllResumes() {
         await this.resumeService.getAllResumes();
     }
