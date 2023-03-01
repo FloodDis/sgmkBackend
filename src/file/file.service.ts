@@ -18,7 +18,12 @@ export class FileService {
 
         await this.fileRepository.save(newFile);
 
-        return { file_id: newFile.file_id };
+        return {
+            file_id: newFile.file_id,
+            file_path: newFile.file_path,
+            file_size: newFile.file_size,
+            file_type: newFile.file_type
+        };
     }
 
     async deleteFile(id: number) {

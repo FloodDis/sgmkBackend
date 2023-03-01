@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
 import { FileModule } from 'src/file/file.module';
 import { InterestModule } from 'src/interest/interest.module';
+import { ResumeModule } from 'src/resume/resume.module';
 import { VacancyModule } from 'src/vacancy/vacancy.module';
 import { UsersController } from './users.controller';
 import { User } from './users.entity';
@@ -15,7 +16,8 @@ import { UsersService } from './users.service';
     forwardRef(() => VacancyModule),
     AuthModule,
     InterestModule,
-    FileModule
+    FileModule,
+    ResumeModule
   ],
   controllers: [UsersController],
   providers: [UsersService],

@@ -7,7 +7,7 @@ export class Resume {
     @PrimaryGeneratedColumn({ type: 'int' })
     resume_id: number;
 
-    @Column()
+    @Column('text', { nullable: true })
     resume_name: string;
 
     @OneToOne(() => File)

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileService } from 'src/file/file.service';
 import { InterestService } from 'src/interest/interest.service';
+import { ResumeService } from 'src/resume/resume.service';
 import { VacancyService } from 'src/vacancy/vacancy.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,7 +18,8 @@ export class UsersService {
         @InjectRepository(User) private userRepository: Repository<User>,
         private vacancyService: VacancyService,
         private interestService: InterestService,
-        private fileService: FileService
+        private fileService: FileService,
+        private resumeService: ResumeService
     ) { };
 
     async createUser(userDto: CreateUserDto) {
@@ -60,18 +62,21 @@ export class UsersService {
         await this.userRepository.delete({ user_id: id });
     }
 
-    async updateUser(id: number, userDto: CreateUserDto) {
+    async updateUser(id: number, dto: CreateUserDto) {
         const user = await this.getUserById(id);
 
-        user.surname = userDto.surname;
-        user.name = userDto.name;
-        user.patronymic = userDto.patronymic;
-        user.email = userDto.email;
-        user.password = userDto.password;
-        user.role = userDto.role;
+        user.surname = dto.surname;
+        user.name = dto.name;
+        user.patronymic = dto.patronymic;
+        user.email = dto.email;
+        user.password = dto.password;
+        user.role = dto.role;
 
-        const photo = await this.fileService.getFileById(userDto.photo_id);
+        const photo = dto.photo_id ? await this.fileService.getFileById(dto.photo_id) : await this.fileService.createFile(dto.photo);
         user.photo = photo;
+
+        const resume = dto.resume_id ? await this.resumeService.getResumeById(dto.resume_id) : await this.resumeService.createResume(dto.resume);
+        user.resume = resume;
 
         this.userRepository.save(user);
     }
