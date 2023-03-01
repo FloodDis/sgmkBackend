@@ -1,5 +1,6 @@
 import { File } from 'src/file/file.entity';
 import { Interest } from 'src/interest/interest.entity';
+import { Resume } from 'src/resume/resume.entity';
 import { Vacancy } from 'src/vacancy/vacancy.entity';
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -46,5 +47,9 @@ export class User {
     @OneToOne(() => File)
     @JoinColumn({ name: 'photo_id' })
     photo: File;
+
+    @OneToOne(() => Resume)
+    @JoinColumn({ name: 'resume_id' })
+    resume: Resume;
 
 }

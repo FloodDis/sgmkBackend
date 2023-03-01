@@ -19,6 +19,7 @@ import { FileModule } from './file/file.module';
 import { Interest } from './interest/interest.entity';
 import { File } from './file/file.entity';
 import { ResumeModule } from './resume/resume.module';
+import { Resume } from './resume/resume.entity';
 
 @Module({
   imports: [
@@ -41,7 +42,8 @@ import { ResumeModule } from './resume/resume.module';
         Region,
         Company,
         Interest,
-        File
+        File,
+        Resume
       ],
       autoLoadEntities: true,
       synchronize: true
