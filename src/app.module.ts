@@ -15,6 +15,9 @@ import { CompaniesModule } from './companies/companies.module';
 import { Company } from './companies/companies.entity';
 import { AuthModule } from './auth/auth.module';
 import { InterestModule } from './interest/interest.module';
+import { FileModule } from './file/file.module';
+import { Interest } from './interest/interest.entity';
+import { File } from './file/file.entity';
 
 @Module({
   imports: [
@@ -36,6 +39,8 @@ import { InterestModule } from './interest/interest.module';
         Vacancy,
         Region,
         Company,
+        Interest,
+        File
       ],
       autoLoadEntities: true,
       synchronize: true
@@ -47,6 +52,7 @@ import { InterestModule } from './interest/interest.module';
     CompaniesModule,
     AuthModule,
     InterestModule,
+    FileModule,
   ],
   controllers: [],
   providers: [],
