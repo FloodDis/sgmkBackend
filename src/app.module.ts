@@ -18,6 +18,7 @@ import { InterestModule } from './interest/interest.module';
 import { FileModule } from './file/file.module';
 import { Interest } from './interest/interest.entity';
 import { File } from './file/file.entity';
+import { ResumeModule } from './resume/resume.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { File } from './file/file.entity';
     AuthModule,
     InterestModule,
     FileModule,
+    ResumeModule,
   ],
   controllers: [],
   providers: [],
