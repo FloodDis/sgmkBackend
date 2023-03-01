@@ -1,5 +1,3 @@
-
-
 export class UpdateVacanciesDto {
-    vacancies_id: number[];
+    readonly vacancies_id: number[];
 }

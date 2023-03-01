@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { InterestService } from 'src/interest/interest.service';
 import { VacancyService } from 'src/vacancy/vacancy.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateInterestsDto } from './dto/update-interests.dto';
 import { UpdateVacanciesDto } from './dto/update-vacancies.dto';
 import { UserResponceDto } from './dto/user-responce.dto';
 import { User } from './users.entity';
@@ -12,7 +14,8 @@ export class UsersService {
 
     constructor(
         @InjectRepository(User) private userRepository: Repository<User>,
-        private vacancyService: VacancyService
+        private vacancyService: VacancyService,
+        private interestService: InterestService
     ) { };
 
     async createUser(userDto: CreateUserDto) {
@@ -26,6 +29,7 @@ export class UsersService {
         user.patronymic = userDto.patronymic;
         user.role = userDto.role;
         user.vacancies = [];
+        user.interests = [];
 
         await this.userRepository.save(user);
 
@@ -66,6 +70,18 @@ export class UsersService {
         for (const id of vacanciesId.vacancies_id) {
             const vacancy = await this.vacancyService.getVacancyById(id);
             userToUpdate.vacancies.push(vacancy);
+        }
+
+        await this.userRepository.save(userToUpdate);
+    }
+
+    async updateInterests(userId: number, interestsId: UpdateInterestsDto) {
+        const userToUpdate = await this.userRepository.findOne({ where: { user_id: userId } });
+        userToUpdate.interests = [];
+
+        for (const id of interestsId.interests_id) {
+            const interest = await this.interestService.getInterestById(id);
+            userToUpdate.interests.push(interest);
         }
 
         await this.userRepository.save(userToUpdate);

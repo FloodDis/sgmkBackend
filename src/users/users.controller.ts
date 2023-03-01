@@ -2,6 +2,7 @@ import { Controller, Post, Body, Get, Param, Delete, Header, Headers, UseGuards 
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RoleGuard } from 'src/auth/guards/role.guard';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateInterestsDto } from './dto/update-interests.dto';
 import { UpdateVacanciesDto } from './dto/update-vacancies.dto';
 import { UsersService } from './users.service';
 
@@ -29,11 +30,19 @@ export class UsersController {
     }
 
     @Post('/vacancy')
+    @UseGuards(RoleGuard)
     async updateUserVacancy(@Headers('X-USER-ID') userId: number, @Body() vacanciesId: UpdateVacanciesDto) {
         await this.usersService.updateVacancies(userId, vacanciesId);
     }
 
+    @Post('/interest')
+    @UseGuards(RoleGuard)
+    async updateUserInterest(@Headers('X-USER-ID') userId: number, @Body() interestsId: UpdateInterestsDto) {
+        await this.usersService.updateInterests(userId, interestsId);
+    }
+
     @Post('/:id')
+    @UseGuards(RoleGuard)
     async updateUser(@Param('id') id: number, @Body() dto: CreateUserDto) {
         await this.usersService.updateUser(id, dto);
     }

@@ -23,12 +23,12 @@ export class InterestService {
     }
 
     async updateInterest(id: number, dto: CreateInterestDto) {
-        const interest = await this.findInterestById(id);
+        const interest = await this.getInterestById(id);
         interest.interest_name = dto.interest_name;
         await this.interestRepository.save(interest);
     }
 
-    async findInterestById(id: number) {
+    async getInterestById(id: number) {
         const interest = await this.interestRepository.findOne({
             where: {
                 interest_id: id

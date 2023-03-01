@@ -11,6 +11,7 @@ import { InterestService } from './interest.service';
     AuthModule
   ],
   controllers: [InterestController],
-  providers: [InterestService]
+  providers: [InterestService],
+  exports: [InterestService]
 })
 export class InterestModule { }
