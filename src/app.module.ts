@@ -14,7 +14,7 @@ import { Region } from './regions/regions.entity';
 import { CompaniesModule } from './companies/companies.module';
 import { Company } from './companies/companies.entity';
 import { AuthModule } from './auth/auth.module';
-import { SocialNetworkModule } from './social-network/social-network.module';
+import { InterestModule } from './interest/interest.module';
 
 @Module({
   imports: [
@@ -29,7 +29,14 @@ import { SocialNetworkModule } from './social-network/social-network.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [User, City, ProfField, Vacancy, Region, Company],
+      entities: [
+        User,
+        City,
+        ProfField,
+        Vacancy,
+        Region,
+        Company,
+      ],
       autoLoadEntities: true,
       synchronize: true
     }),
@@ -39,7 +46,7 @@ import { SocialNetworkModule } from './social-network/social-network.module';
     RegionsModule,
     CompaniesModule,
     AuthModule,
-    SocialNetworkModule,
+    InterestModule,
   ],
   controllers: [],
   providers: [],

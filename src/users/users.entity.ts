@@ -1,3 +1,4 @@
+import { Interest } from 'src/interest/interest.entity';
 import { Vacancy } from 'src/vacancy/vacancy.entity';
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -32,4 +33,13 @@ export class User {
         inverseJoinColumn: { name: 'vacancy_id' }
     })
     vacancies: Vacancy[];
+
+    @ManyToMany(() => Interest, (interest) => interest.users)
+    @JoinTable({
+        name: 'user_interest',
+        joinColumn: { name: 'user_id' },
+        inverseJoinColumn: { name: 'interest_id' }
+    })
+    interests: Interest[];
+
 }

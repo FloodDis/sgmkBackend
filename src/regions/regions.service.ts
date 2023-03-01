@@ -10,9 +10,9 @@ export class RegionsService {
     constructor(@InjectRepository(Region) private regionRepository: Repository<Region>) { }
 
     async getAllRegions() {
-        const regions = this.regionRepository.find();
+        const regions = await this.regionRepository.find();
 
-        return (await regions).map((x) => new RegionResponceDto(x));
+        return regions.map((x) => new RegionResponceDto(x));
     }
 
     async createRegion(regionDto: CreateRegionDto) {
