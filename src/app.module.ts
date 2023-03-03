@@ -29,10 +29,10 @@ import { Resume } from './resume/resume.entity';
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'postgresDB',
+      host: process.env.POSTGRES_HOST,
       port: Number(process.env.POSTGRES_PORT),
-      username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
+      username: process.env.POSTGRES_USER,
       database: process.env.POSTGRES_DB,
       entities: [
         User,
