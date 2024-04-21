@@ -7,29 +7,28 @@ import { CreateCompanyDto } from './dto/create-company.dto';
 @Controller('company')
 @UseGuards(JwtAuthGuard)
 export class CompaniesController {
+  constructor(private companiesService: CompaniesService) {}
 
-    constructor(private companiesService: CompaniesService) { }
+  @Get()
+  async getAllCompanies() {
+    return await this.companiesService.getAllCompanies();
+  }
 
-    @Get()
-    async getAllCompanies() {
-        return await this.companiesService.getAllCompanies();
-    }
+  @Post()
+  @UseGuards(RoleGuard)
+  async createCompany(@Body() companyDto: CreateCompanyDto) {
+    await this.companiesService.createCompany(companyDto);
+  }
 
-    @Post()
-    @UseGuards(RoleGuard)
-    async createCompany(@Body() companyDto: CreateCompanyDto) {
-        await this.companiesService.createCompany(companyDto);
-    }
+  @Delete('/:id')
+  @UseGuards(RoleGuard)
+  async deleteCompany(@Param('id') id: number) {
+    await this.companiesService.deleteCompany(id);
+  }
 
-    @Delete('/:id')
-    @UseGuards(RoleGuard)
-    async deleteCompany(@Param('id') id: number) {
-        await this.companiesService.deleteCompany(id);
-    }
-
-    @Post('/:id')
-    @UseGuards(RoleGuard)
-    async updateCompany(@Param('id') id: number, @Body() dto: CreateCompanyDto) {
-        await this.companiesService.updateCompany(id, dto);
-    }
+  @Post('/:id')
+  @UseGuards(RoleGuard)
+  async updateCompany(@Param('id') id: number, @Body() dto: CreateCompanyDto) {
+    await this.companiesService.updateCompany(id, dto);
+  }
 }

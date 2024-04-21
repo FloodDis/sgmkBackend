@@ -7,15 +7,9 @@ import { Resume } from './resume.entity';
 import { ResumeService } from './resume.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Resume]),
-    FileModule,
-    AuthModule
-  ],
+  imports: [TypeOrmModule.forFeature([Resume]), FileModule, AuthModule],
   controllers: [ResumeController],
   providers: [ResumeService],
-  exports: [
-    ResumeService
-  ]
+  exports: [ResumeService],
 })
-export class ResumeModule { }
+export class ResumeModule {}

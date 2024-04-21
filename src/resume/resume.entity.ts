@@ -1,18 +1,17 @@
 import { File } from 'src/file/file.entity';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-
 @Entity('resume')
 export class Resume {
-    @PrimaryGeneratedColumn({ type: 'int' })
-    resume_id: number;
+  @PrimaryGeneratedColumn({ type: 'int' })
+  resume_id: number;
 
-    @Column('text', { nullable: true })
-    resume_name: string;
+  @Column('text', { nullable: true })
+  resume_name: string;
 
-    @OneToOne(() => File)
-    @JoinColumn({
-        name: 'file_id'
-    })
-    file: File
+  @OneToOne(() => File)
+  @JoinColumn({
+    name: 'file_id',
+  })
+  file: File;
 }

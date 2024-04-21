@@ -1,5 +1,3 @@
-
-
 export class CreateRegionDto {
-    readonly region_name: string;
+  readonly region_name: string;
 }

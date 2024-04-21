@@ -7,27 +7,26 @@ import { FileService } from './file.service';
 @Controller('file')
 @UseGuards(JwtAuthGuard)
 export class FileController {
+  constructor(private fileService: FileService) {}
 
-    constructor(private fileService: FileService) { }
+  @Post()
+  async createFile(@Body() dto: CreateFileDto) {
+    return await this.fileService.createFile(dto);
+  }
 
-    @Post()
-    async createFile(@Body() dto: CreateFileDto) {
-        return await this.fileService.createFile(dto);
-    }
+  @Delete('/:id')
+  async deleteFile(@Param('id') id: number) {
+    await this.fileService.deleteFile(id);
+  }
 
-    @Delete('/:id')
-    async deleteFile(@Param('id') id: number) {
-        await this.fileService.deleteFile(id);
-    }
+  @Get()
+  @UseGuards(RoleGuard)
+  async getAllFiles() {
+    return await this.fileService.getAllFiles();
+  }
 
-    @Get()
-    @UseGuards(RoleGuard)
-    async getAllFiles() {
-        return await this.fileService.getAllFiles();
-    }
-
-    @Post('/:id')
-    async updateFile(@Param('id') id: number, @Body() dto: CreateFileDto) {
-        await this.fileService.updateFile(id, dto);
-    }
+  @Post('/:id')
+  async updateFile(@Param('id') id: number, @Body() dto: CreateFileDto) {
+    await this.fileService.updateFile(id, dto);
+  }
 }

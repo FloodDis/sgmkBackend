@@ -6,14 +6,9 @@ import { File } from './file.entity';
 import { FileService } from './file.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([File]),
-    AuthModule
-  ],
+  imports: [TypeOrmModule.forFeature([File]), AuthModule],
   controllers: [FileController],
   providers: [FileService],
-  exports: [
-    FileService
-  ]
+  exports: [FileService],
 })
-export class FileModule { }
+export class FileModule {}

@@ -1,0 +1,6 @@
+public
+fonts
+*.html
+build
+*.d.ts
+*.json

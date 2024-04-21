@@ -6,12 +6,9 @@ import { Region } from './regions.entity';
 import { RegionsService } from './regions.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Region]),
-    AuthModule
-  ],
+  imports: [TypeOrmModule.forFeature([Region]), AuthModule],
   controllers: [RegionsController],
   providers: [RegionsService],
-  exports: [RegionsService]
+  exports: [RegionsService],
 })
-export class RegionsModule { }
+export class RegionsModule {}

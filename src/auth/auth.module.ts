@@ -13,13 +13,10 @@ import { forwardRef } from '@nestjs/common/utils';
     JwtModule.register({
       secret: process.env.PRIVATE_KEY || 'SECRET',
       signOptions: {
-        expiresIn: '1h'
-      }
+        expiresIn: '1h',
+      },
     }),
   ],
-  exports: [
-    AuthService,
-    JwtModule
-  ]
+  exports: [AuthService, JwtModule],
 })
-export class AuthModule { }
+export class AuthModule {}

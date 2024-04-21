@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CitysService } from 'src/citys/citys.service';
+import { CitiesService } from 'src/cities/cities.service';
 import { CompaniesService } from 'src/companies/companies.service';
 import { ProfFieldService } from 'src/prof-field/prof-field.service';
 import { In, Repository } from 'typeorm';
@@ -10,112 +10,118 @@ import { Vacancy } from './vacancy.entity';
 
 @Injectable()
 export class VacancyService {
+  constructor(
+    @InjectRepository(Vacancy) private vacancyRepository: Repository<Vacancy>,
+    private cityService: CitiesService,
+    private companyService: CompaniesService,
+    private profFieldService: ProfFieldService,
+  ) {}
 
-    constructor(
-        @InjectRepository(Vacancy) private vacancyRepository: Repository<Vacancy>,
-        private cityService: CitysService,
-        private companyService: CompaniesService,
-        private profFieldService: ProfFieldService
-    ) { }
+  async createVacancy(vacancyDto: CreateVacancyDto) {
+    const vacancy = new Vacancy();
 
-    async createVacancy(vacancyDto: CreateVacancyDto) {
-        const vacancy = new Vacancy();
+    vacancy.vacancy_name = vacancyDto.vacancy_name;
+    vacancy.salary = vacancyDto.salary;
+    vacancy.description = vacancyDto.description;
+    vacancy.city = vacancyDto.city_id
+      ? await this.cityService.getCityById(vacancyDto.city_id)
+      : await this.cityService.createCity(vacancyDto.city);
+    vacancy.company = vacancyDto.company_id
+      ? await this.companyService.findCompanyById(vacancyDto.company_id)
+      : await this.companyService.createCompany(vacancyDto.company);
 
-        vacancy.vacancy_name = vacancyDto.vacancy_name;
-        vacancy.salary = vacancyDto.salary;
-        vacancy.description = vacancyDto.description;
-        vacancy.city =
-            vacancyDto.city_id ? await this.cityService.getCityById(vacancyDto.city_id) : await this.cityService.createCity(vacancyDto.city);
-        vacancy.company =
-            vacancyDto.company_id ? await this.companyService.findCompanyById(vacancyDto.company_id) : await this.companyService.createCompany(vacancyDto.company);
+    vacancy.prof_fields = [];
+    for (const prof of vacancyDto.prof_fields) {
+      const newProfField = prof.prof_id
+        ? await this.profFieldService.findProfFieldById(prof.prof_id)
+        : await this.profFieldService.createProfField(prof);
 
-        vacancy.prof_fields = [];
-        for (const prof of vacancyDto.prof_fields) {
-            const newProfField = prof.prof_id ? await this.profFieldService.findProfFieldById(prof.prof_id) : await this.profFieldService.createProfField(prof);
-
-            vacancy.prof_fields.push(newProfField);
-        }
-
-        await this.vacancyRepository.save(vacancy);
-
-        return vacancy;
+      vacancy.prof_fields.push(newProfField);
     }
 
-    async deleteVacancy(id: number) {
-        await this.vacancyRepository.delete({ vacancy_id: id });
+    await this.vacancyRepository.save(vacancy);
+
+    return vacancy;
+  }
+
+  async deleteVacancy(id: number) {
+    await this.vacancyRepository.delete({ vacancy_id: id });
+  }
+
+  async updateVacancy(id: number, vacancyDto: CreateVacancyDto) {
+    const updatedCity = vacancyDto.city_id
+      ? await this.cityService.getCityById(vacancyDto.city_id)
+      : await this.cityService.createCity(vacancyDto.city);
+    const updatedCompany = vacancyDto.company_id
+      ? await this.companyService.findCompanyById(vacancyDto.company_id)
+      : await this.companyService.createCompany(vacancyDto.company);
+    const updatedProfFields = [];
+
+    for (const prof of vacancyDto.prof_fields) {
+      const newProfField = prof.prof_id
+        ? await this.profFieldService.findProfFieldById(prof.prof_id)
+        : await this.profFieldService.createProfField(prof);
+
+      updatedProfFields.push(newProfField);
     }
 
-    async updateVacancy(id: number, vacancyDto: CreateVacancyDto) {
-        const updatedCity =
-            vacancyDto.city_id ? await this.cityService.getCityById(vacancyDto.city_id) : await this.cityService.createCity(vacancyDto.city);
-        const updatedCompany =
-            vacancyDto.company_id ? await this.companyService.findCompanyById(vacancyDto.company_id) : await this.companyService.createCompany(vacancyDto.company);
-        const updatedProfFields = [];
+    const vacancyToUpdate = await this.vacancyRepository.findOne({ where: { vacancy_id: id } });
+    vacancyToUpdate.vacancy_name = vacancyDto.vacancy_name;
+    vacancyToUpdate.salary = vacancyDto.salary;
+    vacancyToUpdate.description = vacancyDto.description;
+    vacancyToUpdate.city = updatedCity;
+    vacancyToUpdate.company = updatedCompany;
+    vacancyToUpdate.prof_fields = updatedProfFields;
 
-        for (const prof of vacancyDto.prof_fields) {
-            const newProfField = prof.prof_id ? await this.profFieldService.findProfFieldById(prof.prof_id) : await this.profFieldService.createProfField(prof);
+    await this.vacancyRepository.save(vacancyToUpdate);
+  }
 
-            updatedProfFields.push(newProfField);
-        }
+  async getVacancyById(id: number) {
+    const vacancy = this.vacancyRepository.findOne({ where: { vacancy_id: id } });
 
-        const vacancyToUpdate = await this.vacancyRepository.findOne({ where: { vacancy_id: id } });
-        vacancyToUpdate.vacancy_name = vacancyDto.vacancy_name;
-        vacancyToUpdate.salary = vacancyDto.salary;
-        vacancyToUpdate.description = vacancyDto.description;
-        vacancyToUpdate.city = updatedCity;
-        vacancyToUpdate.company = updatedCompany;
-        vacancyToUpdate.prof_fields = updatedProfFields;
+    return vacancy;
+  }
 
-        await this.vacancyRepository.save(vacancyToUpdate);
+  async getFilterVacancies(cityIds?: number[], profFieldIds?: number[]) {
+    let filterVacancies = [];
+
+    if (cityIds && profFieldIds) {
+      filterVacancies = await this.vacancyRepository.find({
+        where: {
+          city: {
+            city_id: In(cityIds),
+          },
+          prof_fields: {
+            prof_id: In(profFieldIds),
+          },
+        },
+      });
     }
 
-    async getVacancyById(id: number) {
-        const vacancy = this.vacancyRepository.findOne({ where: { vacancy_id: id } });
-
-        return vacancy;
+    if (!cityIds && profFieldIds) {
+      filterVacancies = await this.vacancyRepository.find({
+        where: {
+          prof_fields: {
+            prof_id: In(profFieldIds),
+          },
+        },
+      });
     }
 
-    async getFilterVacancies(cityIds?: number[], profFieldIds?: number[]) {
-
-        let filterVacancies = [];
-
-        if (cityIds && profFieldIds) {
-            filterVacancies = await this.vacancyRepository.find({
-                where: {
-                    city: {
-                        city_id: In(cityIds)
-                    },
-                    prof_fields: {
-                        prof_id: In(profFieldIds)
-                    }
-                }
-            })
-        }
-
-        if (!cityIds && profFieldIds) {
-            filterVacancies = await this.vacancyRepository.find({
-                where: {
-                    prof_fields: {
-                        prof_id: In(profFieldIds)
-                    }
-                }
-            })
-        }
-
-        if (cityIds && !profFieldIds) {
-            filterVacancies = await this.vacancyRepository.find({
-                where: {
-                    city: {
-                        city_id: In(cityIds)
-                    }
-                }
-            })
-        }
-
-        if (!cityIds && !profFieldIds) {
-            filterVacancies = await this.vacancyRepository.find();
-        }
-
-        return filterVacancies.map(x => new VacancyResponseDto(x));
+    if (cityIds && !profFieldIds) {
+      filterVacancies = await this.vacancyRepository.find({
+        where: {
+          city: {
+            city_id: In(cityIds),
+          },
+        },
+      });
     }
+
+    if (!cityIds && !profFieldIds) {
+      filterVacancies = await this.vacancyRepository.find();
+    }
+
+    return filterVacancies.map((x) => new VacancyResponseDto(x));
+  }
 }

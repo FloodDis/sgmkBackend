@@ -17,10 +17,10 @@ import { UsersService } from './users.service';
     AuthModule,
     InterestModule,
     FileModule,
-    ResumeModule
+    ResumeModule,
   ],
   controllers: [UsersController],
   providers: [UsersService],
-  exports: [UsersService]
+  exports: [UsersService],
 })
-export class UsersModule { }
+export class UsersModule {}

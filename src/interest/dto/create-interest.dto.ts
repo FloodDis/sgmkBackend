@@ -1,5 +1,3 @@
 export class CreateInterestDto {
-
-    interest_name: string;
-
+  interest_name: string;
 }

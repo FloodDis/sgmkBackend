@@ -6,12 +6,9 @@ import { Interest } from './interest.entity';
 import { InterestService } from './interest.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Interest]),
-    AuthModule
-  ],
+  imports: [TypeOrmModule.forFeature([Interest]), AuthModule],
   controllers: [InterestController],
   providers: [InterestService],
-  exports: [InterestService]
+  exports: [InterestService],
 })
-export class InterestModule { }
+export class InterestModule {}

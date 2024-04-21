@@ -6,12 +6,9 @@ import { ProfField } from './prof-field.entity';
 import { ProfFieldService } from './prof-field.service';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([ProfField]),
-    AuthModule
-  ],
+  imports: [TypeOrmModule.forFeature([ProfField]), AuthModule],
   controllers: [ProfFieldController],
   providers: [ProfFieldService],
-  exports: [ProfFieldService]
+  exports: [ProfFieldService],
 })
-export class ProfFieldModule { }
+export class ProfFieldModule {}

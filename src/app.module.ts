@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule } from '@nestjs/config';
 import { User } from './users/users.entity';
-import { CitysModule } from './citys/citys.module';
-import { City } from './citys/citys.entity';
+import { CitiesModule } from './cities/cities.module';
+import { City } from './cities/cities.entity';
 import { ProfFieldModule } from './prof-field/prof-field.module';
 import { ProfField } from './prof-field/prof-field.entity';
 import { VacancyModule } from './vacancy/vacancy.module';
@@ -25,7 +25,7 @@ import { Resume } from './resume/resume.entity';
   imports: [
     UsersModule,
     ConfigModule.forRoot({
-      envFilePath: '.env'
+      envFilePath: '.env',
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -34,21 +34,11 @@ import { Resume } from './resume/resume.entity';
       password: process.env.POSTGRES_PASSWORD,
       username: process.env.POSTGRES_USER,
       database: process.env.POSTGRES_DB,
-      entities: [
-        User,
-        City,
-        ProfField,
-        Vacancy,
-        Region,
-        Company,
-        Interest,
-        File,
-        Resume
-      ],
+      entities: [User, City, ProfField, Vacancy, Region, Company, Interest, File, Resume],
       autoLoadEntities: true,
-      synchronize: true
+      synchronize: true,
     }),
-    CitysModule,
+    CitiesModule,
     ProfFieldModule,
     VacancyModule,
     RegionsModule,
@@ -61,4 +51,4 @@ import { Resume } from './resume/resume.entity';
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule {}

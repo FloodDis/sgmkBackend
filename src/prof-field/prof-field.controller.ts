@@ -7,29 +7,28 @@ import { ProfFieldService } from './prof-field.service';
 @Controller('prof-field')
 @UseGuards(JwtAuthGuard)
 export class ProfFieldController {
+  constructor(private profFieldService: ProfFieldService) {}
 
-    constructor(private profFieldService: ProfFieldService) { }
+  @Post()
+  @UseGuards(RoleGuard)
+  async createProfField(@Body() profDto: CreateProfFieldDto) {
+    return await this.profFieldService.createProfField(profDto);
+  }
 
-    @Post()
-    @UseGuards(RoleGuard)
-    async createProfField(@Body() profDto: CreateProfFieldDto) {
-        return await this.profFieldService.createProfField(profDto);
-    }
+  @Get()
+  async getAllProfFields() {
+    return await this.profFieldService.getAllProfFields();
+  }
 
-    @Get()
-    async getAllProfFields() {
-        return await this.profFieldService.getAllProfFields();
-    }
+  @Delete('/:id')
+  @UseGuards(RoleGuard)
+  async deleteProfField(@Param('id') id: number) {
+    await this.profFieldService.deleteProfField(id);
+  }
 
-    @Delete('/:id')
-    @UseGuards(RoleGuard)
-    async deleteProfField(@Param('id') id: number) {
-        await this.profFieldService.deleteProfField(id);
-    }
-
-    @Post('/:id')
-    @UseGuards(RoleGuard)
-    async updateProfField(@Param('id') id: number, @Body() dto: CreateProfFieldDto) {
-        await this.profFieldService.updateProfField(id, dto);
-    }
+  @Post('/:id')
+  @UseGuards(RoleGuard)
+  async updateProfField(@Param('id') id: number, @Body() dto: CreateProfFieldDto) {
+    await this.profFieldService.updateProfField(id, dto);
+  }
 }

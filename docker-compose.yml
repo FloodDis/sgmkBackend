@@ -5,11 +5,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: production
     env_file:
       - .env
     ports:
-      - 5000:5000
+      - "5000:5000"
     depends_on:
       - db
     networks:
@@ -18,17 +17,26 @@ services:
       - ./src:/app/src 
 
   db:
-    image: postgres:15.1
+    image: postgres:16.2
     restart: always
     environment:
       POSTGRES_PASSWORD: 1111
+      POSTGRES_USER: postgres
       POSTGRES_DB: vpk-db
     ports:
-      - 5432:5432
+      - "5433:5433"
     networks:
       - postgres
 
+  pg_admin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 1111
+    ports:
+      - "5050:80"
+
 networks:
   postgres:
-    driver: bridge 
-
+    driver: bridge
